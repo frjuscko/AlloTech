@@ -104,3 +104,29 @@ function afficher(l) {
     l.classList.toggle('hide');
 }
 
+
+const passConfirm = document.querySelector('#passConfirm');
+const pass = document.querySelector('#pass');
+const submit = document.querySelector('#submit');
+desactiver(submit);
+
+passConfirm.addEventListener('blur', () => {
+    if (passConfirm.value === pass.value) {
+        activer(submit);
+    } else {
+        alert('Les mots de passe ne correspondent pas !');
+        passConfirm.value = "";
+        desactiver(submit);
+    }
+})
+
+function desactiver(bouton) {
+    bouton.disabled = true;
+    bouton.classList.add('desactive');
+}
+
+function activer(bouton) {
+    bouton.disabled = false;
+    bouton.classList.remove('desactive');
+}
+

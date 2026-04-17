@@ -1,24 +1,34 @@
 <?php
+require('config/database.php');
+// ✅ Amélioré - Vérifier que l'ID est valide AVANT la requête
 $id = $_GET['id'] ?? null;
 
-$stmt = $pdo->prepare("
-    SELECT 
-        t.*,
-        u.nom,
-        u.prenom,
-        u.email,
-        u.photo,
-        v.nom AS ville,
-        c.libelle AS competence
-    FROM techniciens t
-    JOIN users u ON t.user_id = u.id
-    LEFT JOIN villes v ON t.ville_id = v.id
-    LEFT JOIN competences c ON t.competence_id = c.id
-    WHERE t.id = :id
-");
+if (!$id || !is_numeric($id) || $id <= 0) {
+    die("ID de technicien invalide");
+}
 
-$stmt->execute([':id' => $id]);
-$tech = $stmt->fetch();
+$sql = "SELECT 
+                t.*,
+                u.nom,
+                u.prenom,
+                u.photo
+            FROM techniciens t
+            JOIN users u ON t.user = u.id
+            WHERE t.id = :id";
+$stmt = $pdo->prepare($sql);
+
+// ✅ Amélioré - Avec gestion d'exception
+try {
+    $stmt->execute([':id' => $id]);
+} catch (PDOException $e) {
+    error_log("Erreur BDD : " . $e->getMessage());
+    die("Erreur technique, veuillez réessayer plus tard");
+}
+
+// ✅ Amélioré - Explicitement en tableau associatif
+$tech = $stmt->fetch(PDO::FETCH_ASSOC);
+
+echo($tech['prenom']);
 
 if (!$tech) {
     die("Technicien introuvable");

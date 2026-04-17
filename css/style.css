@@ -36,7 +36,34 @@ header{
     width: 100vw;
     padding: 1% 4%;
     z-index: 1;
+    transition: .5s ease;
 }
+
+
+/* NavBar2*/
+.navbar2{
+    background: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.249);
+}
+.navbar2 .links ul{
+    color: var(--texte);
+}
+.navbar2 .link{
+    color: var(--texte);
+}
+.navbar2 .logLink{
+    color: var(--primaire);
+}
+.navbar2 .logList{
+    border-color: #014be053;
+    background: #014be022;
+}
+.navbar2 .index{
+    color: var(--accent);
+}
+/**/
+
+
 .desktop{
     display: flex;
     width: 100%;
@@ -95,12 +122,14 @@ header{
     align-items: center;
     justify-content: center;
 }
+
 .logList{
     padding: 8px 7px;
     border: 1px solid rgba(255, 255, 255, 0.384);
     border-radius: 50%;
     background: rgba(255, 255, 255, 0.293);
 }
+
 .index{
     color: var(--accent);
 }
@@ -189,6 +218,12 @@ select{
     font-size: var(--body);
     outline: none;
     border-radius: 10px;
+}
+option{
+    padding: 10px 15px;
+    color: var(--texte);
+    outline: none;
+    border: none;
 }
 .search-bar input{
     width: 320px;
@@ -529,6 +564,10 @@ iframe{
 .blue-clr{
     color: var(--primaire);
 }
+
+
+
+
 @keyframes defile {
     0%{
         transform: translateY(0);
@@ -585,6 +624,11 @@ iframe{
     }
     .techs-grid{
         grid-template-columns: 250px;
+    }
+    footer{
+        flex-direction: column;
+        gap: 25px;
+        padding: 6% 4%;
     }
 }
 

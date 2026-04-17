@@ -1,0 +1,7 @@
+http://localhost:8000/auth.php?message=%E2%9D%8C+Erreur+technique+%3A+SQLSTATE%5B42S22%5D%3A+Column+not+found%3A+1054+Unknown+column+%27Technicien%27+in+%27where+clause%27&type=error
+
+http://localhost:8000/auth.php?message=%E2%9D%8C+Erreur+technique+%3A+SQLSTATE%5B42S22%5D%3A+Column+not+found%3A+1054+Unknown+column+%27tech%27+in+%27where+clause%27&type=error
+
+http://localhost:8000/auth.php?message=%E2%9D%8C+Erreur+technique+%3A+SQLSTATE%5B42S22%5D%3A+Column+not+found%3A+1054+Unknown+column+%27whatsapp%27+in+%27field+list%27&type=error
+
+http://localhost:8000/auth.php?message=%E2%9D%8C+Erreur+technique+%3A+SQLSTATE%5B23000%5D%3A+Integrity+constraint+violation%3A+1452+Cannot+add+or+update+a+child+row%3A+a+foreign+key+constraint+fails+%28%60allotech%60.%60techniciens%60%2C+CONSTRAINT+%60techniciens_ibfk_3%60+FOREIGN+KEY+%28%60ville%60%29+REFERENCES+%60villes%60+%28%60id%60%29+ON+DELETE+CASCADE+ON+UPDATE+CASCADE%29&type=error
