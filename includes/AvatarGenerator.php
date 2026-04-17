@@ -60,7 +60,7 @@ class AvatarGenerator {
             <rect width="200" height="200" fill="url(#grad)" rx="20"/>
 
             <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
-                font-size="80" fill="#ffffff" font-family="Arial, sans-serif" font-weight="bold">
+                font-size="80" fill="#ffffff" font-family="Outfit, sans-serif" font-weight="400">
                 '.$letter.'
             </text>
         </svg>

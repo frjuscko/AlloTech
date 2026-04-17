@@ -6,6 +6,12 @@ if (isset($_POST['submit'])) {
     $nom = trim($_POST['nom'] ?? '');
     $prenom = trim($_POST['prenom'] ?? '');
     $email = trim($_POST['email'] ?? '');
+    $ville = trim($_POST['ville'] ?? '');
+    $adresse = trim($_POST['adresse'] ?? '');
+    $competence = trim($_POST['competence'] ?? '');
+    $titre = trim($_POST['titre'] ?? '');
+    $whatsapp = trim($_POST['whatsapp'] ?? '');
+    $telephone = trim($_POST['telephone'] ?? '');
     $passwd = trim($_POST['password'] ?? '');
 
     // Validation des champs obligatoires
@@ -98,8 +104,10 @@ if (isset($_POST['submit'])) {
         // Vérifier que la table a bien une colonne 'photo'
         // Si ce n'est pas le cas, exécutez cette commande SQL dans pgAdmin :
         // ALTER TABLE users ADD COLUMN photo VARCHAR(255);
-        $sql = "INSERT INTO users (nom, prenom, email, username, passwd, photo, date_creation) 
-                VALUES (:nom, :prenom, :email, :username, :passwd, :photo, NOW())";
+        $role_id = $pdo->query("SELECT id FROM roles WHERE code='tech'")->fetchColumn();
+
+        $sql = "INSERT INTO users (nom, prenom, email, username, passwd, photo, date_creation, role_id) 
+                VALUES (:nom, :prenom, :email, :username, :passwd, :photo, NOW(), :role_id)";
         
         $stmt = $pdo->prepare($sql);
         $stmt->execute([
@@ -108,11 +116,34 @@ if (isset($_POST['submit'])) {
             ':email' => $email,
             ':username' => $username,
             ':passwd' => $hashedPassword,
-            ':photo' => $avatarPath
+            ':photo' => $avatarPath,
+            ':role_id' => $role_id
         ]);
+
+        
         
         // Récupérer l'ID du nouvel utilisateur
         $userId = $pdo->lastInsertId();
+
+        $sql = "INSERT INTO techniciens (titre, telephone, whatsapp, adresse, ville, competence, user) 
+                VALUES (:titre, :telephone, :whatsapp, :adresse, :ville, :competence, :user)";
+        
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([
+            ':titre' => $titre,
+            ':telephone' => $telephone,
+            ':whatsapp' => $whatsapp,
+            'adresse' => $adresse,
+            ':ville' => $ville,
+            ':competence' => $competence,
+            ':user' => $userId
+        ]);
+
+        // Après l'insertion, vérifiez le hash
+        $testCheck = password_verify($passwd, $hashedPassword);
+        error_log("Mot de passe original: " . $passwd);
+        error_log("Hash stocké: " . $hashedPassword);
+        error_log("Vérification du hash: " . ($testCheck ? "OK" : "ÉCHEC"));
         
         // Message de succès avec les infos
         $message = "✅ Utilisateur '$prenom $nom' créé avec succès ! (ID: $userId)<br>
@@ -129,7 +160,7 @@ if (isset($_POST['submit'])) {
         $_SESSION['username'] = $username;
         $_SESSION['photo'] = $avatarPath;
 
-        header("Location: admin.php?message=" . urlencode($message) . "&type=success&avatar=" . urlencode($avatarPath));
+        header("Location: techs.php?message=" . urlencode($message) . "&type=success&avatar=" . urlencode($avatarPath));
         exit;
         
     } catch (PDOException $e) {
@@ -151,7 +182,7 @@ if (isset($_POST['submit'])) {
     }
 } else {
     // Si quelqu'un accède directement à ce fichier sans soumettre le formulaire
-    header("Location: create_user.php");
+    header("Location: auth.php");
     exit;
 }
 ?>

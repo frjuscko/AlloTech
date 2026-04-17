@@ -1,0 +1,17 @@
+
+        <svg width="200" height="200" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="grad">
+                    <stop offset="0%" stop-color="#11418d"/>
+                    <stop offset="100%" stop-color="#56236f"/>
+                </linearGradient>
+            </defs>
+
+            <rect width="200" height="200" fill="url(#grad)" rx="20"/>
+
+            <text x="50%" y="50%" dominant-baseline="middle" text-anchor="middle"
+                font-size="80" fill="#ffffff" font-family="Arial, sans-serif" font-weight="bold">
+                C
+            </text>
+        </svg>
+        

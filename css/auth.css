@@ -114,7 +114,7 @@ form{
 }
 .input-box label{
     position: absolute;
-    left: 3%;
+    left: 10px;
     font-size: var(--body);
     top: 25%;
     z-index: -1;
@@ -128,7 +128,7 @@ form{
     outline: none;
     background: transparent;
     padding: 10px 10px;
-    border-radius: 10px;
+    border-radius: 7px;
 }
 .input-box input:focus{
     border-color: var(--primaire);
@@ -246,6 +246,10 @@ button{
 .slide{
     min-width: 100%;
 }
+.btns{
+    display: flex;
+    justify-content: space-between;
+}
 .btn{
     border-radius: 50%;
     color: var(--primaire);
@@ -273,6 +277,10 @@ button{
 .hideLog{
     transform: translateY(20px);
     opacity: 0;
+}
+
+.desactive{
+    opacity: 0.1;
 }
 @keyframes decalG {
     0%{

@@ -1,9 +1,8 @@
 <?php
     require('config/database.php');
-
+    $competences = $pdo->query("SELECT * FROM competences")->fetchAll();
     $villes = $pdo->query("SELECT * FROM villes")->fetchAll();
 
-    $competences = $pdo->query("SELECT * FROM competences")->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,17 +23,17 @@
                         recevoir des
                         demandes et développer votre activité sur notre
                         plateforme.</p>
-                    <form action>
+                    <form action="login.php" method="post">
                         <div class="input-box">
-                            <input type="email" required>
+                            <input type="email" name="email" required>
                             <label for>Email</label>
                         </div>
                         <div class="input-box">
-                            <input type="password" required>
+                            <input type="password" name="password" required>
                             <label for>Mot de passe</label>
                         </div>
                         <div class="btns">
-                            <button class="valid">Se connecter</button>
+                            <button type="submit" class="valid" name="submit">Se connecter</button>
                         </div>
                     </form>
                 </div>
@@ -85,9 +84,9 @@
                                     <label for>Compétence</label>
                                     <select name="competence" id>
                                         <option value>Votre competence</option>
-                                        <?php foreach ($competences as $competence) ?>
-                                            <option value=" . <? htmlspecialchars($competence['id']) ?> . "><? htmlspecialchars($competence['nom']) ?></option>
-                                        <?php ?>
+                                        <?php foreach ($competences as $competence): ?>
+                                            <option value="<?= htmlspecialchars($competence['id']) ?>"><?= htmlspecialchars($competence['libelle']) ?></option>
+                                        <?php endforeach ?>
                                     </select>
                                 </div>
                                 <div class="input-box">
@@ -98,9 +97,9 @@
                                     <label for>Ville</label>
                                     <select name="ville" id>
                                         <option value>Votre ville</option>
-                                        <?php foreach ($villes as $ville) ?>
-                                            <option value=" . <? htmlspecialchars($ville['id']) ?> . "><? htmlspecialchars($ville['nom']) ?></option>
-                                        <?php ?>
+                                        <?php foreach ($villes as $ville): ?>
+                                            <option value="<?= htmlspecialchars($ville['id']) ?>"><?= htmlspecialchars($ville['nom']) ?></option>
+                                        <?php endforeach ?>
                                     </select>
                                 </div>
                                 <div class="input-box">
@@ -108,7 +107,7 @@
                                     <label for>Adresse</label>
                                 </div>
                                 <div class="btns">
-                                    <button type="button" class="prev"><svg
+                                    <button type="button" class="btn prev"><svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
                                             fill="currentColor"><path
@@ -122,27 +121,27 @@
                             </div>
                             <div class="slide">
                                 <div class="input-box">
-                                    <input type="password" required>
+                                    <input type="password" id="pass" required>
                                     <label for>Mot de passe</label>
                                 </div>
                                 <div class="input-box">
-                                    <input type="password" name="password" required>
+                                    <input type="password" name="password" id="passConfirm" required>
                                     <label for>Confirmez votre mot de
                                         passe</label>
                                 </div>
                                 <div class="btns">
-                                    <button type="button" class="prev"><svg
+                                    <button type="button" class="btn prev"><svg
                                             xmlns="http://www.w3.org/2000/svg"
                                             viewBox="0 0 24 24"
                                             fill="currentColor"><path
                                                 d="M7.82843 10.9999H20V12.9999H7.82843L13.1924 18.3638L11.7782 19.778L4 11.9999L11.7782 4.22168L13.1924 5.63589L7.82843 10.9999Z"></path></svg></button>
-                                    <button type="submit" name="submit" class="valid">S'inscrire</button>
+                                    <button type="submit" name="submit" class="valid" id="submit">S'inscrire</button>
                                 </div>
                             </div>
                         </div>
                     </form>
                 </div>
-                <a href="index.html" class="back"><svg
+                <a href="index.php" class="back"><svg
                         xmlns="http://www.w3.org/2000/svg"
                         viewBox="0 0 24 24" fill="currentColor"><path
                             d="M8 7V11L2 6L8 1V5H13C17.4183 5 21 8.58172 21 13C21 17.4183 17.4183 21 13 21H4V19H13C16.3137 19 19 16.3137 19 13C19 9.68629 16.3137 7 13 7H8Z"></path></svg></a>

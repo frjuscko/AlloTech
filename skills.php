@@ -23,16 +23,16 @@ $stmt = $pdo->prepare("SELECT * FROM users WHERE id = ?");
 $stmt->execute([$user_id]);
 $auth = $stmt->fetch();
 
-// Récupérer chaque ville avec le nombre de techniciens associés
+// Récupérer chaque compétence avec le nombre de techniciens associés
 $sql = "SELECT 
-            v.*,
+            c.*,
             COUNT(t.id) AS techs
-        FROM villes v
-        LEFT JOIN techniciens t ON t.ville = v.id
-        GROUP BY v.id, v.nom
+        FROM competences c
+        LEFT JOIN techniciens t ON t.competence = c.id
+        GROUP BY c.id, c.libelle
         ORDER BY techs DESC";
 
-$villes = $pdo->query($sql)->fetchAll();
+$skills = $pdo->query($sql)->fetchAll();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -65,11 +65,11 @@ $villes = $pdo->query($sql)->fetchAll();
                                     17.4549L16.5305 16.9775L18 14L19.4695 16.9775L22.7553 17.4549L20.3776 19.7725L20.9389 
                                     23.0451L18 21.5ZM12 13C8.685 13 6 10.315 6 7C6 3.685 8.685 1 12 1C15.315 1 18 3.685 18 7C18 
                                     10.315 15.315 13 12 13Z"></path></svg></a></li>
-                    <li><a href="skills.php" class="btn_link fluide"><svg
+                    <li><a href="skills.php" class="btn_link fluide index"><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24" fill="currentColor"><path
                                     d="M18.001 20.0026V14.6693H20.001V22.0026H4.00098V14.6693H6.00098V20.0026H18.001ZM7.59977 14.7359L7.913 12.7566L16.75 14.456L16.6367 16.0421L7.59977 14.7359ZM8.79937 10.2041L9.53245 8.60463L17.5298 12.3367L16.7967 13.9362L8.79937 10.2041ZM11.0653 6.27208L12.1982 4.9392L18.9959 10.604L17.863 11.9368L11.0653 6.27208ZM15.3972 2.14014L20.6621 9.20443L19.2625 10.2707L13.9976 3.20645L15.3972 2.14014ZM7.33319 18.6679V16.6686H16.6634V18.6679H7.33319Z"></path></svg></a></li>
-                    <li><a href="villes.php" class="btn_link fluide index"><svg
+                    <li><a href="villes.php" class="btn_link fluide"><svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 24 24" fill="currentColor"><path
                                     d="M21 19H23V21H1V19H3V4C3 3.44772 3.44772 3 4 3H14C14.5523 3 15 3.44772 15 4V19H17V9H20C20.5523 9 21 9.44772 
@@ -77,7 +77,7 @@ $villes = $pdo->query($sql)->fetchAll();
                 </ul>
                 <a href>
                     <div class="photo_container user_photo">
-                        <img src="<?= htmlspecialchars($auth['photo']) ?>" alt>
+                        <img src="<?= htmlspecialchars($auth['photo']) ?>" alt="<?= htmlspecialchars($auth['username']) ?>">
                     </div>
                 </a>
             </div>
@@ -101,7 +101,7 @@ $villes = $pdo->query($sql)->fetchAll();
                                     d="M22 20H2V18H3V11.0314C3 6.04348 7.02944 2 12 2C16.9706 2 21 6.04348 21 11.0314V18H22V20ZM9.5 21H14.5C14.5 22.3807 13.3807 23.5 12 23.5C10.6193 23.5 9.5 22.3807 9.5 21Z"></path></svg></button>
                         <div class="user">
                             <button class="photo_container user_photo">
-                                <img src="<?= htmlspecialchars($auth['photo']) ?>" alt="<?= htmlspecialchars($auth['username']) ?>">
+                                <img src="<?= htmlspecialchars($auth['photo']) ?>" alt>
                             </button>
                             <div class="names">
                                 <p class="body gris_texte bold"><?= htmlspecialchars($auth['username']) ?></p>
@@ -114,38 +114,40 @@ $villes = $pdo->query($sql)->fetchAll();
                     <div class="left">
                         <div class="card tableau">
                             <p class="body bold gris_texte">Gestion des
-                                villes</p>
+                                compétences</p>
                             <table>
                                 <thead>
                                     <tr>
-                                        <th>Ville</th>
+                                        <th>Compétence</th>
                                         <th>Code</th>
                                         <th>Techniciens</th>
                                         <th>Actions</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($villes as $ville): ?>
+                                    <?php foreach ($skills as $skill): ?>
                                         <tr>
                                             <td>
-                                                <div class="user">
+                                                
+                                                    <div class="user">
                                                         <div
                                                             class="photo_container photo">
                                                             <img
-                                                                src="<?= htmlspecialchars($ville['photo']) ?>"
-                                                                alt="<?= htmlspecialchars($ville['code']) ?>">
+                                                                src="<?= htmlspecialchars($skill['photo']) ?>"
+                                                                alt="<?= htmlspecialchars($skill['code']) ?>">
                                                         </div>
                                                         <div class="names">
                                                             <p
-                                                                class="body bold gris_texte"><?= htmlspecialchars($ville['nom']) ?></p>
+                                                                class="body bold gris_texte"><?= htmlspecialchars($skill['libelle']) ?></p>
                                                             <p
                                                                 class="details gris_detail">Ajoutée
                                                                 aujourd'hui</p>
                                                         </div>
                                                     </div>
+                                                
                                             </td>
-                                            <td class="gris_detail body"><?= htmlspecialchars($ville['code']) ?></td>
-                                            <td class="gris_detail body"><?= htmlspecialchars($ville['techs']) ?></td>
+                                            <td class="gris_detail body"><?= htmlspecialchars($skill['code']) ?></td>
+                                            <td class="gris_detail body"><?= htmlspecialchars($skill['techs']) ?></td>
                                             <td><div class="actions">
                                                     <a href><div
                                                             class="photo_container element">
@@ -161,7 +163,7 @@ $villes = $pdo->query($sql)->fetchAll();
                                                         </div></a>
                                                 </div></td>
                                         </tr>
-                                    <?php endforeach ?>                       
+                                    <?php endforeach ?>  
                                 </tbody>
                             </table>
                         </div>
@@ -182,7 +184,7 @@ $villes = $pdo->query($sql)->fetchAll();
                             </div>
                         </div>
                     </div>
-                    <a href="villeadd.php" class="float_btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M18.364 17.364L12 23.7279L5.63604 17.364C2.12132 13.8492 2.12132 8.15076 5.63604 4.63604C9.15076 1.12132 14.8492 1.12132 18.364 4.63604C21.8787 8.15076 21.8787 13.8492 18.364 17.364ZM11 10H8V12H11V15H13V12H16V10H13V7H11V10Z"></path></svg></a>
+                    <a href="skilladd.php" class="float_btn"><svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor"><path d="M2.5 7C2.5 9.48528 4.51472 11.5 7 11.5C9.48528 11.5 11.5 9.48528 11.5 7C11.5 4.51472 9.48528 2.5 7 2.5C4.51472 2.5 2.5 4.51472 2.5 7ZM2.5 17C2.5 19.4853 4.51472 21.5 7 21.5C9.48528 21.5 11.5 19.4853 11.5 17C11.5 14.5147 9.48528 12.5 7 12.5C4.51472 12.5 2.5 14.5147 2.5 17ZM12.5 17C12.5 19.4853 14.5147 21.5 17 21.5C19.4853 21.5 21.5 19.4853 21.5 17C21.5 14.5147 19.4853 12.5 17 12.5C14.5147 12.5 12.5 14.5147 12.5 17ZM16 11V8H13V6H16V3H18V6H21V8H18V11H16Z"></path></svg></a>
                 </div>
             </div>
         </main>
