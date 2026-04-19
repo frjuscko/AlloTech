@@ -83,7 +83,7 @@ $techs = $stmt->fetchAll();
         </header>
         <main>
             <div class="cover2">
-                <p class="chemin"><a href="index.html">accueil /</a>
+                <p class="chemin"><a href="index.php">accueil /</a>
                     techniciens</p>
                 <h1 class="header">Trouvez un technicien</h1>
                 <p>Parcourez notre réseau de techniciens qualifiés selon vos
@@ -180,9 +180,9 @@ $techs = $stmt->fetchAll();
                 <div class="footer_text">
                     <div class="footer_links">
                         <ul>
-                            <li><a href>accueil</a></li>
-                            <li><a href>techniciens</a></li>
-                            <li><a href>contacts</a></li>
+                            <li><a href="index.php">accueil</a></li>
+                            <li><a href="techs.php">techniciens</a></li>
+                            <li><a href="contacts.php">contacts</a></li>
                         </ul>
                     </div>
                     <p>© 2026 AlloTech. Tous droits réservés.</p>

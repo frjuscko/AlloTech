@@ -45,7 +45,21 @@ $competences_aleatoires = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $sql = "SELECT * FROM villes ORDER BY RAND() LIMIT 3";
 $stmt = $pdo->query($sql);
 $villes_aleatoires = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+$sql = "SELECT 
+                t.*,
+                u.*,
+                v.nom AS ville,
+                c.libelle AS competence
+            FROM techniciens t
+            JOIN users u ON t.user = u.id
+            JOIN villes v ON t.ville = v.id
+            JOIN competences c ON t.competence = c.id";
+
+$stmt = $pdo->query($sql);
+$recentTechs = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -59,7 +73,7 @@ $villes_aleatoires = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <body>
         <main>
             <div class="menu">
-                <a href><div class="photo_container logo"></div></a>
+                <a href="index.php"><div class="photo_container logo"></div></a>
                 <ul>
                     <li><a href="dashboard.php" class="btn_link fluide index"><svg
                                 xmlns="http://www.w3.org/2000/svg"
@@ -188,7 +202,8 @@ $villes_aleatoires = $stmt->fetchAll(PDO::FETCH_ASSOC);
                             </div>
                         </div>
                     </div>
-                    <div class="card tableau" id="recentUsers">
+                    <div>
+                        <div class="card tableau" id="recentUsers">
                         <p class="body bold gris_texte">Inscriptions
                             récentes</p>
                         <table>
@@ -202,101 +217,35 @@ $villes_aleatoires = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <div class="user">
-                                            <div class="photo_container photo">
-                                                <img src="imgs/user (1).png"
-                                                    alt>
+                                <?php foreach($recentTechs as $tech): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="user">
+                                                <div class="photo_container photo">
+                                                    <img src="<?= htmlspecialchars($tech['photo']) ?>"
+                                                        alt>
+                                                </div>
+                                                <div class="names">
+                                                    <p class="body bold gris_texte"><?= htmlspecialchars($tech['prenom']) ?> <?= htmlspecialchars($tech['nom']) ?></p>
+                                                    <p class="details gris_detail">Membre <?= date('d M Y', strtotime($tech['date_creation'])) ?></p>
+                                                </div>
                                             </div>
-                                            <div class="names">
-                                                <p class="body bold gris_texte">Frjus
-                                                    Cko</p>
-                                                <p class="details gris_detail">Membre aujourd'hui</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="gris_detail">UI Design</td>
-                                    <td class="gris_detail">Calavi</td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/telephone.png" alt>
-                                    </div></a></td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/whatsapp.png" alt>
-                                    </div></a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="user">
-                                            <div class="photo_container photo">
-                                                <img src="imgs/user (1).png"
-                                                    alt>
-                                            </div>
-                                            <div class="names">
-                                                <p class="body bold gris_texte">Frjus
-                                                    Cko</p>
-                                                <p class="details gris_detail">Membre aujourd'hui</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="gris_detail">UI Design</td>
-                                    <td class="gris_detail">Calavi</td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/telephone.png" alt>
-                                    </div></a></td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/whatsapp.png" alt>
-                                    </div></a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="user">
-                                            <div class="photo_container photo">
-                                                <img src="imgs/user (1).png"
-                                                    alt>
-                                            </div>
-                                            <div class="names">
-                                                <p class="body bold gris_texte">Frjus
-                                                    Cko</p>
-                                                <p class="details gris_detail">Membre aujourd'hui</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="gris_detail">UI Design</td>
-                                    <td class="gris_detail">Calavi</td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/telephone.png" alt>
-                                    </div></a></td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/whatsapp.png" alt>
-                                    </div></a></td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <div class="user">
-                                            <div class="photo_container photo">
-                                                <img src="imgs/user (1).png"
-                                                    alt>
-                                            </div>
-                                            <div class="names">
-                                                <p class="body bold gris_texte">Frjus
-                                                    Cko</p>
-                                                <p class="details gris_detail">Membre aujourd'hui</p>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="gris_detail">UI Design</td>
-                                    <td class="gris_detail">Calavi</td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/telephone.png" alt>
-                                    </div></a></td>
-                                    <td class="gris_detail"><a href=""><div class="photo_container element">
-                                        <img src="imgs/whatsapp.png" alt>
-                                    </div></a></td>
-                                </tr>
+                                        </td>
+                                        <td class="gris_detail"><?= htmlspecialchars($tech['competence']) ?></td>
+                                        <td class="gris_detail"><?= htmlspecialchars($tech['ville']) ?></td>
+                                        <td class="gris_detail"><a href="tel:<?= htmlspecialchars($tech['telephone']) ?>"><div class="photo_container element">
+                                            <img src="imgs/telephone.png" alt>
+                                        </div></a></td>
+                                        <td class="gris_detail"><a href="https://wa.me//<?= htmlspecialchars($tech['whatsapp']) ?>" target="_blank"><div class="photo_container element">
+                                            <img src="imgs/whatsapp.png" alt>
+                                        </div></a></td>
+                                    </tr>
+                                <?php endforeach ?> 
+                                
                                 
                             </tbody>
                         </table>
+                    </div>
                     </div>
                 </div>
             </div>
