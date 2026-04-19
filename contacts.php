@@ -132,9 +132,9 @@
                 <div class="footer_text">
                     <div class="footer_links">
                         <ul>
-                            <li><a href>accueil</a></li>
-                            <li><a href>techniciens</a></li>
-                            <li><a href>contacts</a></li>
+                            <li><a href="index.php">accueil</a></li>
+                            <li><a href="techs.php">techniciens</a></li>
+                            <li><a href="contacts.php">contacts</a></li>
                         </ul>
                     </div>
                     <p>© 2026 AlloTech. Tous droits réservés.</p>
